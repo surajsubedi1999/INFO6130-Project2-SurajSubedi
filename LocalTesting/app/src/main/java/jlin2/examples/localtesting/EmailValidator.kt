@@ -41,21 +41,22 @@ class EmailValidator : TextWatcher {
          * @return `true` if the input is a valid email, `false` otherwise.
          */
         fun isValidEmail(email: CharSequence?): Boolean {
+            // 1. Check for null or empty
             if (email == null || email.isEmpty()) {
                 return false
             }
 
-            // Check for double dots
+            // 2. Check for double dots
             if (email.toString().contains("..")) {
                 return false
             }
 
-            // Check if has @ symbol
+            // 3. Check if has @ symbol
             if (!email.contains("@")) {
                 return false
             }
 
-            // Split and check parts
+            // 4. Split email into parts
             val parts = email.toString().split("@")
             if (parts.size != 2) {
                 return false
@@ -64,17 +65,22 @@ class EmailValidator : TextWatcher {
             val localPart = parts[0]
             val domainPart = parts[1]
 
-            // Check local part
+            // 5. Check local part not empty
             if (localPart.isEmpty()) {
                 return false
             }
 
-            // Check domain part
-            if (domainPart.isEmpty() || !domainPart.contains(".")) {
+            // 6. Check domain part not empty
+            if (domainPart.isEmpty()) {
                 return false
             }
 
-            // Final pattern check
+            // 7. Check domain contains dot
+            if (!domainPart.contains(".")) {
+                return false
+            }
+
+            // 8. Final regex validation
             return EMAIL_PATTERN.matcher(email).matches()
         }
     }
