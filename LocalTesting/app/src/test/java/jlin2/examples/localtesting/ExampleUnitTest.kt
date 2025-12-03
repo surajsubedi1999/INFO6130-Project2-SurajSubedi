@@ -1,17 +1,27 @@
 package jlin2.examples.localtesting
 
 import org.junit.Test
-
 import org.junit.Assert.*
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+class EmailValidatorTest {
+
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun testCorrectEmailFormat() {
+        assertTrue(EmailValidator.isValidEmail("123@abc.com"))
+    }
+
+    @Test
+    fun testCorrectSubdomainEmail() {
+        assertTrue(EmailValidator.isValidEmail("123@abc.co.ca"))
+    }
+
+    @Test
+    fun testIncorrectDomain() {
+        assertFalse(EmailValidator.isValidEmail("123@abc"))
+    }
+
+    @Test
+    fun testDoubleDots() {
+        assertFalse(EmailValidator.isValidEmail("123@abc..com"))
     }
 }
