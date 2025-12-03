@@ -2,54 +2,71 @@ package jlin2.examples.localtesting
 
 import org.junit.Test
 import org.junit.Assert.*
+import org.junit.BeforeClass
 
 class EmailValidatorTest {
 
-    // Test 1: Correct email address format, such as 123@abc.com
+    companion object {
+        @BeforeClass
+        @JvmStatic
+        fun setup() {
+            println("=== Starting EmailValidator Tests ===")
+        }
+    }
+
     @Test
     fun testCorrectEmailFormat() {
+        println("Test 1: Testing 123@abc.com")
         assertTrue(EmailValidator.isValidEmail("123@abc.com"))
+        println("✓ Test 1 passed")
     }
 
-    // Test 2: Correct email address subdomain format, such as 123@abc.co.ca
     @Test
     fun testCorrectSubdomainEmail() {
+        println("Test 2: Testing 123@abc.co.ca")
         assertTrue(EmailValidator.isValidEmail("123@abc.co.ca"))
+        println("✓ Test 2 passed")
     }
 
-    // Test 3: Incorrect email address format (incorrect domain), such as 123@abc
     @Test
     fun testIncorrectDomain() {
+        println("Test 3: Testing 123@abc (should fail)")
         assertFalse(EmailValidator.isValidEmail("123@abc"))
+        println("✓ Test 3 passed")
     }
 
-    // Test 4: Incorrect email address format (with double dots), such as 123@abc..com
     @Test
     fun testDoubleDots() {
+        println("Test 4: Testing 123@abc..com (should fail)")
         assertFalse(EmailValidator.isValidEmail("123@abc..com"))
+        println("✓ Test 4 passed")
     }
 
-    // Test 5: Incorrect email address format (without username), such as @abc.com
     @Test
     fun testNoUsername() {
+        println("Test 5: Testing @abc.com (should fail)")
         assertFalse(EmailValidator.isValidEmail("@abc.com"))
+        println("✓ Test 5 passed")
     }
 
-    // Test 6: Incorrect email address format (without domain), such as testing123
     @Test
     fun testNoDomain() {
+        println("Test 6: Testing testing123 (should fail)")
         assertFalse(EmailValidator.isValidEmail("testing123"))
+        println("✓ Test 6 passed")
     }
 
-    // Test 7: Incorrect email address format (empty string), such as ""
     @Test
     fun testEmptyString() {
+        println("Test 7: Testing empty string (should fail)")
         assertFalse(EmailValidator.isValidEmail(""))
+        println("✓ Test 7 passed")
     }
 
-    // Test 8: Incorrect email address format (null), null
     @Test
     fun testNullInput() {
+        println("Test 8: Testing null (should fail)")
         assertFalse(EmailValidator.isValidEmail(null))
+        println("✓ Test 8 passed")
     }
 }

@@ -8,12 +8,10 @@ android {
 
     defaultConfig {
         applicationId "jlin2.examples.localtesting"
-        minSdk 21  // CHANGED FROM 32 to 21
+        minSdk 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -21,10 +19,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    // Add this build type for unit tests
-    buildTypes {
         debug {
             testCoverageEnabled true
         }
@@ -39,10 +33,24 @@ android {
         jvmTarget = '1.8'
     }
 
-    // Add this for test source sets
+    // FIX: CORRECT test source set configuration
     sourceSets {
         test {
-            java.srcDirs += 'src/test/java'
+            java.srcDirs = ['src/test/java']
+            resources.srcDirs = ['src/test/resources']
+        }
+    }
+
+    // ADD THIS for unit tests
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            all {
+                testLogging {
+                    events "passed", "skipped", "failed", "standardOut", "standardError"
+                    showStandardStreams = true
+                }
+            }
         }
     }
 }
@@ -53,22 +61,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-    // Unit testing dependencies
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:4.0.0'
-
-    // Instrumented test dependencies
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
-
-    // Unit testing
+    // Unit testing - ONLY ONCE
     testImplementation 'junit:junit:4.13.2'
 
-    // UI Testing
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
+    // Instrumented tests - ONLY IF YOU HAVE UI TESTS IN LOCALTESTING
+    // androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    // androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
